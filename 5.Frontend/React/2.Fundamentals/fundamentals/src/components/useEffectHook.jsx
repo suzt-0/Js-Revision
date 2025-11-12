@@ -108,7 +108,7 @@ export default function UseEffectHook() {
         </div>
         <div className="component">
           <h3>A example on using the useEffect to fetch data from an API</h3>
-          <p>
+          <div className="component">
             Status: {status}
             {status === "fetched" && (
               <div>
@@ -116,7 +116,8 @@ export default function UseEffectHook() {
                 <pre>{JSON.stringify(data, null, 2)}</pre>
               </div>
             )}
-          </p>
+          </div>
+
           <p>
             Here, we use useEffect to fetch data from an API when the component
             mounts. The fetched data is stored in the state and displayed once
@@ -128,11 +129,21 @@ export default function UseEffectHook() {
             more effectively.
           </p>
           <p>
-            Like: if the state changes to "fetched", we can trigger a effect to do something else. 
+            Like: if the state changes to "fetched", we can trigger a effect to
+            do something else.
           </p>
-            <code><b>Example: </b>{`useEffect(() => { if (status === "fetched") { /* do something */ } }, [status])`}</code>
-          <p>OR we can use it to fetch data automatically when the component mounts.</p>
-          <code><b>Example: </b>{`useEffect(() => { fetchData(); }, [])`}</code>
+          <code>
+            <b>Example: </b>
+            {`useEffect(() => { if (status === "fetched") { /* do something */ } }, [status])`}
+          </code>
+          <p>
+            OR we can use it to fetch data automatically when the component
+            mounts.
+          </p>
+          <code>
+            <b>Example: </b>
+            {`useEffect(() => { fetchData(); }, [])`}
+          </code>
         </div>
       </div>
     </>

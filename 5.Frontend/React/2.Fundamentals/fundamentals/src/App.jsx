@@ -9,6 +9,7 @@ import UseReducerHook from "./components/useReducerHook";
 import UseEffectHook from "./components/useEffectHook";
 import Conditional from "./components/Conditional";
 import List from "./components/List";
+import MemoizationExample from "./components/memoizationExample";
 
 function App() {
   // can also be written as -> export default function App() {...}
@@ -80,6 +81,12 @@ function App() {
       {/* ---------------------------------------------------------------- */}
       <div className="component">
         <UseEffectHook />
+      </div>
+      {/* ---------------------------------------------------------------- */}
+      <div className="component">
+        {/* memoization example */}
+        <MemoizationExample />
+    
       </div>
       {}
     </>

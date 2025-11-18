@@ -1,6 +1,5 @@
 // Fundamentals of React 
 
-import { useReducer } from "react";
 
 // 1. Components
 // Components are the building blocks of a React application. They can be functional or class-based.
@@ -479,3 +478,211 @@ import { useReducer } from "react";
 // }
 // In this example, we defined a reducer function that handles increment and decrement actions.
 // The Counter component uses the useReducer hook to manage the count state and provides buttons to dispatch actions to update the state.
+
+//-----------------------------------------------------------------------------------------------------------------
+
+// Redux:
+
+//A tool similar to useReducer but used for larger applications where state management becomes complex.
+// Redux provides a centralized store to manage the state of the entire application.
+// It follows a unidirectional data flow, where actions are dispatched to update the state through reducers.
+// Redux is often used with React applications to handle global state management and facilitate communication between components.
+
+
+// store -> a centralized place to hold the application state
+// actions -> plain JavaScript objects that describe what happened in the application
+// reducers -> pure functions that specify how the state changes in response to actions
+// dispatch -> a function used to send actions to the store to update the state
+
+
+// eg:
+// import { createStore } from 'redux';
+// const initialState = { count: 0 };
+// function counterReducer(state = initialState, action) {
+//   switch (action.type) {
+//     case 'INCREMENT':
+//       return { ...state, count: state.count + 1 };
+//     case 'DECREMENT':
+//       return { ...state, count: state.count - 1 };
+//     default:
+//       return state;
+//   }
+// }
+// const store = createStore(counterReducer);
+// store.subscribe(() => {
+//   console.log('State updated:', store.getState());
+// });
+// store.dispatch({ type: 'INCREMENT' });
+// store.dispatch({ type: 'DECREMENT' });
+
+
+//--------------------------------------------------------------------------------------------
+// Useref Hook:
+// The useRef hook is used to create a mutable reference that persists across renders in React functional components.
+// ie it allows you to access and manipulate DOM elements directly
+// or to store mutable values that do not trigger re-renders when updated.
+// Example of using the useRef Hook:
+
+// import React, { useRef } from 'react';
+// function TextInput() {
+//   const inputRef = useRef(null);
+//   const focusInput = () => {
+//     inputRef.current.focus();
+//   };
+//   return (
+//     <div>
+//       <input type="text" ref={inputRef} />
+//       <button onClick={focusInput}>Focus Input</button>
+//     </div>
+//   );
+// }
+
+//When to use useRef:
+// 1. Accessing DOM elements directly for tasks like focusing an input or measuring dimensions.
+// 2. Storing mutable values that do not require re-rendering, such as timers or previous state values.
+// 3. Keeping track of values across renders without causing re-renders, such as tracking if a component is mounted.
+
+
+//Practical usecase of the useRef Hook:
+//Lets imagine we have a form with an input field and a submit button.
+//We want to focus the input field automatically when the component mounts,
+// and we also want to keep track of how many times the form has been submitted without causing re-renders.
+// We can use the useRef hook to achieve this:
+
+// import React, { useRef, useEffect, useState } from 'react';
+// function Form() {
+//   const inputRef = useRef(null);
+//   const submitCountRef = useRef(0);
+//   const [submitted, setSubmitted] = useState(false);
+//   useEffect(() => {
+//     inputRef.current.focus(); // Focus the input field on mount
+//   }, []);
+//   const handleSubmit = (event) => {
+//     event.preventDefault();
+//     submitCountRef.current += 1; // Increment the submit count
+//     setSubmitted(true); // Update state to trigger re-render
+//   };
+
+//   return (
+//     <div>
+//       <form onSubmit={handleSubmit}>
+//         <input type="text" ref={inputRef} />
+//         <button type="submit">Submit</button>
+//       </form>
+//       {submitted && (
+//         <p>Form submitted {submitCountRef.current} times</p>
+//       )}
+//     </div>
+//   );
+// }
+
+// In this example, we use useRef to create a reference to the input field and focus it when the component mounts.
+// We also use another useRef to keep track of the number of times the form has been submitted.
+// This allows us to update the submit count without causing unnecessary re-renders of the component.
+
+//---------------------------------------------------------------------------------------------------------
+
+// UseContext Hook:
+// The useContext hook is used to access the value of a context in React functional components.
+// Context provides a way to share values between components without having to pass props down manually at every level.
+// Example of using the useContext Hook:
+// import React, { createContext, useContext } from 'react';
+// const ThemeContext = createContext('light');
+// function ThemedButton() {
+//   const theme = useContext(ThemeContext);
+//   return <button className={theme}>Themed Button</button>;
+// }    
+// In this example, we created a ThemeContext and used the useContext hook to access its value in the ThemedButton component.
+
+// When to use useContext:
+// 1. Sharing global data or settings across multiple components, such as themes or user authentication status.
+// 2. Avoiding prop drilling by providing data directly to components that need it, regardless of their position in the component tree.
+// 3. Managing state that needs to be accessed by many components without passing props through intermediate components.
+
+//---------------------------------------------------------------------------------------------------------
+
+//UseCallback Hook:
+// The useCallback hook is used to memoize functions in React functional components.
+// It returns a memoized version of the callback function that only changes if one of the dependencies has changed.
+// This is useful for optimizing performance by preventing unnecessary re-creations of functions on every render.
+
+// Example of using the useCallback Hook:
+// import React, { useState, useCallback } from 'react';
+// function Counter() {
+//   const [count, setCount] = useState(0);
+//   const increment = useCallback(() => {
+//     setCount((prevCount) => prevCount + 1);
+//   }, []);
+//   return (
+//     <div>
+//       <p>Count: {count}</p>
+//       <button onClick={increment}>Increment</button>
+//     </div>
+//   );
+// }
+// In this example, we used the useCallback hook to memoize the increment function.
+// This prevents the function from being recreated on every render, which can improve performance,
+// especially when passing the function as a prop to child components that rely on reference equality to avoid re-renders.
+
+// When to use useCallback:
+// 1. When passing functions as props to child components that are memoized with React.memo.
+// 2. When defining functions inside components that are used in event handlers or effects.
+// 3. When you want to optimize performance by preventing unnecessary re-creations of functions on every render.
+
+
+//---------------------------------------------------------------------------------------------------------
+
+// UseMemo Hook:
+// The useMemo hook is used to memoize the result of a computation in React functional components.
+// It returns a memoized value that only recomputes when one of the dependencies has changed.
+// This is useful for optimizing performance by avoiding expensive calculations on every render.
+
+// Example of using the useMemo Hook:
+// import React, { useState, useMemo } from 'react';
+// function Fibonacci({ n }) {
+//   const fib = useMemo(() => {
+//     function computeFibonacci(num) {
+//       if (num <= 1) return num;
+//       return computeFibonacci(num - 1) + computeFibonacci(num - 2);
+//     }
+//     return computeFibonacci(n);
+//   }, [n]);
+//   return <div>Fibonacci of {n} is {fib}</div>;
+// }
+// In this example, we used the useMemo hook to memoize the result of the Fibonacci computation.
+// This prevents the expensive calculation from being performed on every render unless the input n changes.
+
+// When to use useMemo:
+// 1. When performing expensive calculations that should only be recomputed when necessary.
+// 2. When deriving values from props or state that are used in rendering or other computations.
+// 3. When optimizing performance by avoiding unnecessary recalculations on every render.
+
+//---------------------------------------------------------------------------------------------------------
+
+// Short Summary:
+// React is a powerful JavaScript library for building user interfaces.
+// Component-> reusable building blocks of UI
+// JSX -> syntax extension for writing HTML-like code in JavaScript
+// Props -> read-only data passed from parent to child components
+// State -> mutable data managed within components
+// Lifecycle Methods -> special methods to hook into component life stages
+// Event Handling -> handling user interactions
+// Conditional Rendering -> rendering UI based on conditions
+// Lists and Keys -> rendering lists with unique keys
+// Forms -> managing user input
+// Hooks -> functions to use state and other React features in functional components
+// Context API -> sharing data across components without prop drilling
+// Error Boundaries -> catching errors in component tree
+// Portals -> rendering components outside main DOM tree
+// Fragments -> grouping elements without extra DOM nodes
+// Higher-Order Components -> functions that enhance components
+// Render Props -> sharing code using a prop that is a function
+// React Router -> routing in single-page applications
+// Redux -> predictable state management
+// Testing -> using React Testing Library and Jest
+// UseState-> managing state in functional components
+// UseReducer-> managing complex state logic
+// UseRef-> accessing DOM elements and mutable values
+// UseContext-> accessing context values
+// UseCallback-> memoizing functions
+// UseMemo-> memoizing computed values
